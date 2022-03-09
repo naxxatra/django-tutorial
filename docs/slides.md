@@ -745,12 +745,11 @@ create database
 py manage.py migrate
 ```
 
-and create a superuser
 ```bash
 py manage.py startapp posts
 ```
 
-In another terminal runs the following commands:
+and create a superuser
 
 ```bash
 py manage.py createsuperuser
