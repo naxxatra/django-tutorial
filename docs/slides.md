@@ -447,22 +447,50 @@ for i in range(1, 101):
     print(output)
 ```
 
+
+```python
+for i in range(1,101):
+    string = "".join("Fizz" if (i%3==0) else "")
+    string = string + ("Buzz" if (i%5==0) else "")
+    print(i if(string=="") else string)
+```
+
+```python
+for number in range(1,101):
+    if number % 3 == 0 and number % 5 == 0: result = "FizzBuzz"
+    elif number % 3 == 0: result = "Fizz"
+    elif number % 5 == 0: result = "Buzz"
+    else: result=number
+    print(result)
+```
+
 ---
 
 # Solution 3
 
 ```python {all|1|2|2-3|2-4|5-6|7-8|9-10|all}
 for i in range(1, 101):
-    if i % 3:
-        if i % 5:
+    if i % 3 == 0: 
+        if i % 5 == 0:
             print("FizzBuzz")
         else:
             print("Fizz")
-    elif i % 5:
+    elif i % 5 == 0:
         print("Buzz")
     else:
         print(i)
 ```
+
+```python
+for number in range(1,101):
+    result = number
+    if (number % 3 == 0): result = "Fizz"
+    if number % 5 == 0:
+        if type(result) == str:result += "Buzz"
+        else: result = "Buzz"
+    print(result)
+```
+
 
 ---
 layout: cover
@@ -500,6 +528,41 @@ Django ORM is an application layer that allows you to interact with a database w
 # MVT (model-view-template)
 
 <img src="https://i0.wp.com/blog.knoldus.com/wp-content/uploads/2019/03/mvt.png?resize=571%2C261&ssl=1" class="h-5/6 bg-white/50 rounded-xl">
+
+---
+
+# Classes & inheritance
+
+```python
+class Human:
+    def __init__(self, name, age):
+        self.name = name
+        self.age = age
+        self.hands = 2
+        self.nose = 1
+        self.eyes = 2
+
+    def talk(self):
+        print("Hello")
+    
+    def run(self):
+        print("I am running")
+```
+
+```python
+class Programmer(Human):
+    def __init__(self, name, age, language):
+        super().__init__(name, age)
+        self.language = language
+    
+    def code(self):
+        print("I am coding")
+    
+    def computer_skill(self):
+        print("I am a good computer programmer")
+```
+
+
 
 ---
 
@@ -572,4 +635,123 @@ blog/index.html
     </form>
 </body>
 </html>
+```
+
+---
+
+# Steps to start
+
+```bash
+# install pip and venv
+python3 -m pip install wheel
+# upgrade pip
+python3 -m pip install -U pip
+
+# install pipenv
+python3 -m pip install pipenv
+# cd $projectroot/
+cd /to/path/of/the-project/
+
+# create virtual environment
+pipenv install
+# this might take a few minutes
+```
+
+
+---
+
+
+# Status checks
+
+```powershell
+python -V
+
+pip -v
+
+# installing pipenv
+pip install pipenv --user
+
+# checking pipenv installation
+pipenv -h
+```
+
+
+possible errors:
+
+```bash
+pipenv shell 'pipenv' is not recognized as an internal or external command, operable program or batch file.
+```
+
+
+---
+
+# Windows troubleshooting
+
+
+1. Press the <kbd>Windows key+X</kbd> to access the Power User Task Menu.
+2. In the Power User Task Menu, select the `System` option.
+3. In the About window, click the `Advanced system settings` link under `Related settings` on the far-right side.
+4. In the System Properties window, click the Advanced tab, then click the `Environment Variables` button near the bottom of that tab.
+5. In the `Environment Variables` window, highlight the `Path` variable in the System variables section and click the `Edit` button. Add or modify the path lines with the paths you want the computer to access. Each directory path is separated with a semicolon, as shown below.
+
+
+Second, replace your `<username>` in the following paths and add them to the PATH environment variable:
+
+```powershell
+c:\Users\<username>\AppData\Roaming\Python\Python38\Site-Packages
+C:\Users\<username>\AppData\Roaming\Python\Python38\Scripts
+```
+
+
+
+
+---
+
+# Getting started
+
+windows instructions
+
+```powershell
+# pip install django
+
+py -m pip install Django
+
+# check django version
+py -m django --version
+```
+
+
+change into your desired project directory and run the following commands:
+
+```powershell
+django-admin startproject blog
+```
+
+Run the development server:
+
+```powershell
+py manage.py runserver
+```
+
+
+
+---
+
+# Start a new app
+
+create database
+
+```bash
+py manage.py migrate
+```
+
+and create a superuser
+```bash
+py manage.py startapp posts
+```
+
+In another terminal runs the following commands:
+
+```bash
+py manage.py createsuperuser
 ```
