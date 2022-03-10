@@ -1,0 +1,72 @@
+default_language_version:
+  # default language version for each language used in the repository
+  python: python3
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.1.0
+    hooks:
+      # See https://pre-commit.com/hooks.html for more hooks
+      - id: check-ast
+      - id: check-case-conflict
+      - id: check-executables-have-shebangs
+      - id: check-merge-conflict
+      - id: debug-statements
+      - id: end-of-file-fixer
+      - id: name-tests-test
+        args: ["--django"]
+        stages: [commit]
+      - id: trailing-whitespace
+  - repo: https://github.com/ecugol/pre-commit-hooks-django
+    rev: v0.4.0 # Use the ref you want to point at
+    hooks:
+      - id: check-untracked-migrations
+        stages: [commit]
+        # args: ["--branches", "main", "master", "staging"]
+        # Optional, if specified, hook will work only on these branches
+        # otherwise it will work on all branches
+      - id: check-unapplied-migrations
+        stages: [commit]
+      - id: check-absent-migrations
+        stages: [commit]
+  - repo: https://github.com/psf/black
+    rev: 22.1.0
+    hooks:
+      - id: black
+  - repo: https://github.com/pycqa/isort
+    rev: 5.10.1
+    hooks:
+      - id: isort
+        stages: [commit]
+  - repo: local
+    hooks:
+      - id: django-pytest
+        name: Run django tests
+        entry: pytest
+        language: system
+        types: [python]
+        stages: [push]
+        always_run: true
+        pass_filenames: false
+      # - id: prettier
+      #   name: prettier
+      #   language: system
+      #   entry: bash -c 'cd erp-frontend && ./node_modules/.bin/prettier --ignore-unknown --config .prettierrc --loglevel warn --write "."'
+      #   stages: [commit]
+  - repo: https://github.com/pre-commit/mirrors-prettier
+    rev: "v2.5.1"
+    hooks:
+      - id: prettier
+  - repo: https://github.com/pycqa/bandit
+    rev: 1.7.4
+    hooks:
+      - id: bandit
+        args: ["-iii", "-ll"]
+  # - repo: https://github.com/zricethezav/gitleaks
+  #   rev: v8.2.0
+  #   hooks:
+  #     - id: gitleaks
+  # - repo: "https://github.com/crate-ci/typos"
+  #     rev: typos-dict-v0.8.0
+  #     hooks:
+  #       - id: typos
+  #         stages: []

@@ -1,6 +1,7 @@
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 
+
 class Posts(models.Model):
     """
     Model for the posts
@@ -10,7 +11,6 @@ class Posts(models.Model):
     content = models.TextField("Content of the post")
     created_at = models.DateTimeField("Created at", auto_now=True, editable=True)
     cover = models.ImageField(null=True, blank=True)
-    
 
     class Meta:
         verbose_name = _("Posts")

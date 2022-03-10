@@ -7,22 +7,38 @@ class Migration(migrations.Migration):
 
     initial = True
 
-    dependencies = [
-    ]
+    dependencies = []
 
     operations = [
         migrations.CreateModel(
-            name='Posts',
+            name="Posts",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('title', models.CharField(max_length=200, verbose_name='Title of the post')),
-                ('content', models.TextField(verbose_name='Content of the post')),
-                ('created_at', models.DateTimeField(auto_now=True, verbose_name='Created at')),
-                ('cover', models.ImageField(blank=True, null=True, upload_to='posts/covers/')),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                (
+                    "title",
+                    models.CharField(max_length=200, verbose_name="Title of the post"),
+                ),
+                ("content", models.TextField(verbose_name="Content of the post")),
+                (
+                    "created_at",
+                    models.DateTimeField(auto_now=True, verbose_name="Created at"),
+                ),
+                (
+                    "cover",
+                    models.ImageField(blank=True, null=True, upload_to="posts/covers/"),
+                ),
             ],
             options={
-                'verbose_name': 'Posts',
-                'verbose_name_plural': 'Posts',
+                "verbose_name": "Posts",
+                "verbose_name_plural": "Posts",
             },
         ),
     ]
