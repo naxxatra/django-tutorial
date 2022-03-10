@@ -1,5 +1,31 @@
-{% extends 'base.html' %}
+{% extends 'base.html' %} {% block content %} {% with object_list as posts %}
 
-{% block content %}
-<h3>posts page</h3>
-{% endblock %}
+<div class="w-3/4 mx-auto">
+  <div class="w-full bg-gray-100 rounded-lg shadow-lg">
+    <ul>
+      {% for post in posts %}
+      <li class="border border-b-2 py-3 px-3">
+        {% comment %} Container for the post {% endcomment %}
+        <div>
+          {% comment %} This is title and date {% endcomment %}
+          <div class="flex justify-between items-center">
+            <div class="text-gray-800 text-2xl">{{ post.title }}</div>
+            <div class="text-gray-400 font-light text-lg">
+              {{ post.created_at |date }}
+            </div>
+          </div>
+          {% comment %} This is the body of the post {% endcomment %}
+          <div class="text-gray-600 mt-3">
+            {{ post.content | truncatechars:200}}
+            <a class="cursor-pointer hover:underline" href="{% url 'detail' post.id %}">
+              <span class="text-gray-600">Read more</span>
+            </a>
+          </div>
+        </div>
+      </li>
+      {% endfor %}
+    </ul>
+  </div>
+</div>
+
+{% endwith %} {% endblock content %}

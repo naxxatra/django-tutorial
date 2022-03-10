@@ -963,7 +963,7 @@ this should give us local timezone, in all our interfaces
 in `posts/views.py` we can create a view for our blog-posts.
 these views will be used to render the blog-posts.
 
-```python {all|1-2|3-10|11-17|all}
+```python
 from django.views import generic
 from posts.models import Posts
 
@@ -972,15 +972,21 @@ class PostListView(generic.ListView):
     View to see all the posts in a list
     """
     model = Posts
-    queryset = Posts.objects.all().order_by('-created_at')
-    template_name = 'posts/index.html'
+    queryset = Posts.objects.all().order_by("-created_at")
+    template_name = "posts/index.html"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["title"] = "All Posts"
+        return context
 
 class PostDetailView(generic.DetailView):
     """
     View to see a single post in detail
     """
+
     model = Posts
-    template_name = 'posts/detail.html'
+    template_name = "posts/detail.html"
 ```
 
 ---
@@ -1083,7 +1089,11 @@ We can define the basic layout of our application in `base.html` file.
     <title>{{title}}</title>
   </head>
   <body>
-    <h1>{{title}}</h1>
+    <h1
+      class="text-3xl text-indigo-500 font-bold w-full py-4 mb-8 px-10 bg-gray-200 shadow-lg"
+    >
+      {{title}}
+    </h1>
     {% block content %}
     <!-- Content Goes here -->
     {% endblock content %}
@@ -1093,6 +1103,69 @@ We can define the basic layout of our application in `base.html` file.
     </footer>
   </body>
 </html>
+
 ```
 
 ---
+
+# Adding a template for blog index
+
+In the `posts/index.html` file, we can add the following:
+
+```html
+{% extends 'base.html' %} {% block content %}
+
+{% with object_list as posts %}
+
+<div class="w-3/4 mx-auto">
+  <div class="w-full bg-gray-100 rounded-lg shadow-lg">
+    <ul>
+      {% for post in posts %}
+      <li class="border border-b-2 py-3 px-3">
+        {% comment %} Container for the post {% endcomment %}
+        <div>
+          {% comment %} This is title and date {% endcomment %}
+          <div class="flex justify-between items-center">
+            <div class="text-gray-800 text-2xl">{{ post.title }}</div>
+            <div class="text-gray-400 font-light text-lg">
+              {{ post.created_at |date }}
+            </div>
+          </div>
+          {% comment %} This is the body of the post {% endcomment %}
+          <div class="text-gray-600 mt-3">
+            {{ post.content | truncatechars:200}}
+          </div>
+        </div>
+      </li>
+      {% endfor %}
+    </ul>
+  </div>
+</div>
+
+{% endwith %} {% endblock content %}
+```
+
+---
+
+# creating a template for blog detail
+
+```html
+{% extends "base.html" %} {% block content %}
+
+<div class="mx-20 bg-gray-100 shadow-lg rounded-lg p-8">
+  <button>
+    <a href="/posts"> <- Back</a>
+  </button>
+  {% comment %} This is title and date {% endcomment %}
+  <div class="flex justify-between items-center">
+    <div class="text-gray-800 text-2xl">{{ object.title }}</div>
+    <div class="text-gray-400 font-light text-lg">
+      {{ object.created_at | date }}
+    </div>
+  </div>
+  {% comment %} This is the body of the post {% endcomment %}
+  <div class="text-gray-600 mt-3">{{ object.content }}</div>
+</div>
+
+{% endblock content %}
+```

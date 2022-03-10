@@ -1,0 +1,18 @@
+{% extends "base.html" %} {% block content %}
+
+<div class="mx-20 bg-gray-100 shadow-lg rounded-lg p-8">
+  <button>
+    <a href="/posts"> <- Back</a>
+  </button>
+  {% comment %} This is title and date {% endcomment %}
+  <div class="flex justify-between items-center">
+    <div class="text-gray-800 text-2xl">{{ object.title }}</div>
+    <div class="text-gray-400 font-light text-lg">
+      {{ object.created_at | date }}
+    </div>
+  </div>
+  {% comment %} This is the body of the post {% endcomment %}
+  <div class="text-gray-600 mt-3">{{ object.content }}</div>
+</div>
+
+{% endblock content %}
