@@ -788,6 +788,7 @@ This file would live in your
 
 ```python
 from django.db import models
+from django.utils.translation import gettext_lazy as _
 
 class Posts(models.Model):
     """
@@ -797,7 +798,7 @@ class Posts(models.Model):
     title = models.CharField("Title of the post", max_length=200)
     content = models.TextField("Content of the post")
     created_at = models.DateTimeField("Created at", auto_now=True, editable=True)
-    cover = models.ImageField(upload_to="posts/covers/", null=True, blank=True)
+    cover = models.ImageField(null=True, blank=True)
     
 
     class Meta:
@@ -815,9 +816,11 @@ class Posts(models.Model):
 
 # Adding app to settings
 
+`settings.py` controls the configuration of the project.
 
-open `settings.py` and add find the line below:
+it contains a section called `INSTALLED_APPS` that contains a list of all the apps that are installed in the project.
 
+open `[project_name] > settings.py` and add find the line below:
 ```python
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -904,3 +907,70 @@ Open up the admin panel and create a new post.
 [localhost:8000/admin/](https://localhost:8000/admin/)
 
 
+---
+
+# Configuring additional settings
+
+`settings.py` also contains sections for the `STATIC_URL` and `MEDIA_URL` variables.
+as well as `TEMPLATES` and `MIDDLEWARE`.
+
+In the beginning of the file, add the following:
+```python
+import os
+```
+
+
+let us first configure the `STATIC_URL` variable. we will use `STATIC_URL` to tell django where to find the static files.
+
+```python
+STATIC_URL = "/static/"
+```
+
+configuring the `MEDIA_URL` variable. we will use `MEDIA_URL` to tell django where to find the media files (like images videos etc).
+
+```python
+# Base url to serve media files
+MEDIA_URL = '/media/'
+
+# Path where media is stored
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
+```
+
+---
+
+# Adding media url to settings
+
+Open up `urls.py` and update it with the following:
+
+```python
+from django.contrib import admin
+from django.urls import path
+from django.conf import settings
+from django.conf.urls.static import static
+
+urlpatterns = [
+    path('admin/', admin.site.urls),
+]
+
+if settings.DEBUG:
+    urlpatterns += static(
+        settings.MEDIA_URL, 
+        document_root=settings.MEDIA_ROOT
+    )
+```
+
+
+
+---
+
+# Setting up timezone
+
+In `settings.py` we can set the `TIME_ZONE` and `LANGUAGE_CODE` variable.
+
+```python
+LANGUAGE_CODE = 'en-in'
+
+TIME_ZONE = 'Asia/Kolkata'
+```
+
+this should give us local timezone, in all our interfaces

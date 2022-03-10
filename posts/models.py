@@ -9,7 +9,7 @@ class Posts(models.Model):
     title = models.CharField("Title of the post", max_length=200)
     content = models.TextField("Content of the post")
     created_at = models.DateTimeField("Created at", auto_now=True, editable=True)
-    cover = models.ImageField(upload_to="posts/covers/", null=True, blank=True)
+    cover = models.ImageField(null=True, blank=True)
     
 
     class Meta:
