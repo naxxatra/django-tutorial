@@ -47,26 +47,17 @@ repos:
         stages: [push]
         always_run: true
         pass_filenames: false
-      # - id: prettier
-      #   name: prettier
-      #   language: system
-      #   entry: bash -c 'cd erp-frontend && ./node_modules/.bin/prettier --ignore-unknown --config .prettierrc --loglevel warn --write "."'
-      #   stages: [commit]
-  - repo: https://github.com/pre-commit/mirrors-prettier
-    rev: "v2.5.1"
-    hooks:
-      - id: prettier
   - repo: https://github.com/pycqa/bandit
     rev: 1.7.4
     hooks:
       - id: bandit
         args: ["-iii", "-ll"]
-  # - repo: https://github.com/zricethezav/gitleaks
-  #   rev: v8.2.0
+  - repo: https://github.com/crate-ci/typos
+    rev: v1.5.0
+    hooks:
+      - id: typos
+        stages: []
+  # - repo: https://github.com/pre-commit/mirrors-prettier
+  #   rev: "v2.5.1"
   #   hooks:
-  #     - id: gitleaks
-  # - repo: "https://github.com/crate-ci/typos"
-  #     rev: typos-dict-v0.8.0
-  #     hooks:
-  #       - id: typos
-  #         stages: []
+  #     - id: prettier

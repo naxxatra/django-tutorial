@@ -1001,6 +1001,30 @@ urlpatterns = [
 
 ---
 
+# Connecting urls and views
+
+Adding posts/urls to main urls.py
+open up the `project_root > urls.py` file and add the following:
+
+```python
+from django.conf import settings
+from django.conf.urls.static import static
+from django.contrib import admin
+from django.urls import include, path
+
+urlpatterns = [
+    path("admin/", admin.site.urls),
+    path("posts/", include("posts.urls")), # new line!
+]
+
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+```
+
+This will include the `posts/urls.py` into our main `urls.py` file. and helps us stay organized.
+
+---
+
 # Setting up templates for our blog-posts
 
 we need to first configure the `templates` directory, and add it to the `TEMPLATE_DIRS` variable.
@@ -1034,6 +1058,17 @@ TEMPLATES = [
 
 ---
 
+# Setting up templates
+
+1. Create a `templates` directory in the root directory of the project.
+2. In your `templates` directory, create a `base.html` file.
+3. inside template directory, create a `posts` directory.
+4. In the `templates/posts` directory,
+   - create a `index.html` file.
+   - create a `detail.html` file.
+
+---
+
 # Creating a basic template
 
 We can define the basic layout of our application in `base.html` file.
@@ -1059,3 +1094,5 @@ We can define the basic layout of our application in `base.html` file.
   </body>
 </html>
 ```
+
+---
