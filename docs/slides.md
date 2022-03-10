@@ -637,9 +637,20 @@ blog/index.html
 </html>
 ```
 
+
+---
+layout: cover
+---
+
+# Getting started with a new django app
+
+
 ---
 
 # Steps to start
+
+Setup pipenv. Ignore this step if you have already setup pipenv/venv.
+
 
 ```bash
 # install pip and venv
@@ -686,7 +697,7 @@ pipenv shell 'pipenv' is not recognized as an internal or external command, oper
 ---
 
 # Windows troubleshooting
-
+for pipenv users. Please ignore this step if you have already setup venv.
 
 1. Press the <kbd>Windows key+X</kbd> to access the Power User Task Menu.
 2. In the Power User Task Menu, select the `System` option.
@@ -733,24 +744,163 @@ Run the development server:
 py manage.py runserver
 ```
 
+press <kbd>Ctrl</kbd>+<kbd>C</kbd> to stop the server.
+
 
 
 ---
 
 # Start a new app
 
-create database
-
+Apply database migrations. This step will create a new file `db.sqlite3` in your project root. if it didnt exist already.
 ```bash
-py manage.py migrate
+py manage.py migrate 
 ```
 
+
+create a new app named posts where we can setup a model and views
 ```bash
 py manage.py startapp posts
 ```
 
-and create a superuser
+and create a superuser (admin), using which we can manage the project from the admin panel
 
 ```bash
 py manage.py createsuperuser
 ```
+
+this should bring up a prompt that looks like this:
+
+```bash
+Username (leave blank to use 'user'): admin
+Email address: admin@gamil.com
+Password:
+Password (again):
+```
+
+
+---
+
+# Creating models
+
+This file would live in your 
+`project folder > posts > models.py`
+
+```python
+from django.db import models
+
+class Posts(models.Model):
+    """
+    Model for the posts
+    """
+
+    title = models.CharField("Title of the post", max_length=200)
+    content = models.TextField("Content of the post")
+    created_at = models.DateTimeField("Created at", auto_now=True, editable=True)
+    cover = models.ImageField(upload_to="posts/covers/", null=True, blank=True)
+    
+
+    class Meta:
+        verbose_name = _("Posts")
+        verbose_name_plural = _("Posts")
+
+    def __str__(self):
+        return self.title
+
+    def get_absolute_url(self):
+        return reverse("_detail", kwargs={"pk": self.pk})
+```
+
+---
+
+# Adding app to settings
+
+
+open `settings.py` and add find the line below:
+
+```python
+INSTALLED_APPS = [
+    'django.contrib.admin',
+    'django.contrib.auth',
+    'django.contrib.contenttypes',
+    'django.contrib.sessions',
+    'django.contrib.messages',
+    'django.contrib.staticfiles',
+]
+
+INSTALLED_APPS += [
+    'posts',
+]
+```
+
+---
+
+# Installing necessary libraries
+
+```bash
+pip install Pillow
+```
+
+
+---
+
+# Make migrations
+
+
+This will create necessary migrations for out new posts app.
+
+```bash
+python manage.py makemigrations
+```
+
+desired output:
+```bash
+Migrations for 'posts':
+  posts/migrations/0001_initial.py
+    - Create model Posts
+```
+
+this will apply the created migrations to database.
+
+```bash
+python manage.py migrate
+```
+
+desired output:
+```bash
+Operations to perform:
+  Apply all migrations: admin, auth, contenttypes, posts, sessions
+Running migrations:
+  Applying posts.0001_initial... OK
+```
+
+
+
+---
+
+# Registering model in admin interface
+
+Open up admin.py in posts app and add the following:
+
+```python
+from django.contrib import admin
+
+from posts.models import Posts
+
+class PostsAdmin(admin.ModelAdmin):
+    list_display = ('title', 'created_at')
+    search_fields = ('title',)
+    list_filter = ('created_at',)
+    ordering = ('-created_at',)
+
+admin.site.register(Posts, PostsAdmin)
+```
+
+---
+
+# Creating a new post
+
+Open up the admin panel and create a new post.
+[localhost:8000/admin/](https://localhost:8000/admin/)
+
+
