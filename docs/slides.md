@@ -974,3 +974,107 @@ TIME_ZONE = 'Asia/Kolkata'
 ```
 
 this should give us local timezone, in all our interfaces
+
+
+---
+
+# Setting up views for our blog-posts
+
+in `posts/views.py` we can create a view for our blog-posts.
+these views will be used to render the blog-posts.
+
+```python {all|1-2|3-10|11-17|all}
+from django.views import generic
+from posts.models import Posts
+
+class PostListView(generic.ListView):
+    """
+    View to see all the posts in a list
+    """
+    model = Posts
+    queryset = Posts.objects.all().order_by('-created_at')
+    template_name = 'posts/index.html'
+
+class PostDetailView(generic.DetailView):
+    """
+    View to see a single post in detail
+    """
+    model = Posts
+    template_name = 'posts/detail.html'
+```
+
+---
+
+# Setting up urls for our blog-posts
+
+in `posts/urls.py` we can create urls for our blog-posts.
+
+```python
+from django.urls import path
+from posts.views import PostListView, PostDetailView
+
+urlpatterns = [
+    path('', PostListView.as_view(), name='index'),
+    path('<int:pk>/', PostDetailView.as_view(), name='detail'),
+]
+```
+
+---
+
+# Setting up templates for our blog-posts
+
+we need to first configure the `templates` directory, and add it to the `TEMPLATE_DIRS` variable.
+
+1. Create a `templates` directory in the root directory of the project.
+2. Add the `templates` directory to the `TEMPLATE_DIRS` variable in `settings.py`.
+```python
+TEMPLATES_DIRS = os.path.join(BASE_DIR,'templates')
+```
+3. Now in `settings.py` find the `TEMPLATES` variable and add the following:
+```python
+TEMPLATES = [
+    {
+        'BACKEND': 'django.template.backends.django.DjangoTemplates',
+        'DIRS': [TEMPLATE_DIRS],
+        'APP_DIRS': True,
+        'OPTIONS': {
+            'context_processors': [
+                'django.template.context_processors.debug',
+                'django.template.context_processors.request',
+                'django.contrib.auth.context_processors.auth',
+                'django.contrib.messages.context_processors.messages',
+            ],
+        },
+    },
+]
+```
+
+---
+
+# Creating a basic template
+
+We can define the basic layout of our application in `base.html` file.
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <title>{{title}}</title>
+</head>
+<body>
+    <h1>{{title}}</h1>
+    {% block content %}
+    <!-- Content Goes here -->
+    {% endblock content %}
+    <!-- Footer -->
+    <footer>
+        <p>My new blog</p>
+    </footer>
+</body>
+</html>
+```
+
+<!-- https://forms.gle/xPuC2s9AC9bfHsjo9 -->
