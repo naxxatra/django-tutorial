@@ -1,3 +1,7 @@
+# Online docs
+
+https://hackmd.io/@rt0sfDCMRAKPrjq1mxbhgw/H1snEB8-9
+
 Basic setup for django
 
 **Setup pip and virtual environment**
