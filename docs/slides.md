@@ -346,6 +346,7 @@ apple = {
 }
 orange = {"name": "orange", "price": 50, "color": "orange"}
 ```
+---
 
 # Dictionaries
 
@@ -1076,5 +1077,3 @@ We can define the basic layout of our application in `base.html` file.
 </body>
 </html>
 ```
-
-<!-- https://forms.gle/xPuC2s9AC9bfHsjo9 -->
