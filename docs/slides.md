@@ -24,7 +24,7 @@ div#cont{
 
 <v-clicks>
 
-1. Python intro 
+1. Python intro
 2. django Basics + models
 3. Views, Forms, Templates
 4. HTML, CSS, UI.
@@ -340,12 +340,13 @@ Dictionaries are key value pairs
 
 ```python
 apple = {
-    "name": "Apple", 
-    "price": 100, 
+    "name": "Apple",
+    "price": 100,
     "color": "red"
 }
 orange = {"name": "orange", "price": 50, "color": "orange"}
 ```
+
 ---
 
 # Dictionaries
@@ -363,7 +364,6 @@ apple["flavour"] = "sweet" # adding a new key-value pair
 ```python
 apple.update({"calory":125,"type":"natural"}) # updating a dictionary with another dictionary
 ```
-
 
 ---
 
@@ -448,7 +448,6 @@ for i in range(1, 101):
     print(output)
 ```
 
-
 ```python
 for i in range(1,101):
     string = "".join("Fizz" if (i%3==0) else "")
@@ -471,7 +470,7 @@ for number in range(1,101):
 
 ```python {all|1|2|2-3|2-4|5-6|7-8|9-10|all}
 for i in range(1, 101):
-    if i % 3 == 0: 
+    if i % 3 == 0:
         if i % 5 == 0:
             print("FizzBuzz")
         else:
@@ -492,9 +491,6 @@ for number in range(1,101):
     print(result)
 ```
 
-
----
-layout: cover
 ---
 
 # Session 2
@@ -514,7 +510,6 @@ Django is a batteries-included web framework for Python.
 - can be used to create a RESTful API (Representational State Transfer) (REST)
   - `(GET, POST, PUT, DELETE)`
 
-
 ---
 
 # Django ORM
@@ -522,7 +517,6 @@ Django is a batteries-included web framework for Python.
 Django ORM is an application layer that allows you to interact with a database without writing any raw SQL.
 
 <img src="https://engineertodeveloper.com/wp-content/uploads/2021/01/django_orm_diagram_1.png" class="h-5/6 bg-white/50 rounded-xl">
-
 
 ---
 
@@ -545,7 +539,7 @@ class Human:
 
     def talk(self):
         print("Hello")
-    
+
     def run(self):
         print("I am running")
 ```
@@ -555,15 +549,13 @@ class Programmer(Human):
     def __init__(self, name, age, language):
         super().__init__(name, age)
         self.language = language
-    
+
     def code(self):
         print("I am coding")
-    
+
     def computer_skill(self):
         print("I am a good computer programmer")
 ```
-
-
 
 ---
 
@@ -616,42 +608,44 @@ blog/index.html
 ```html {all|1-2|3-7|8-21|10-14|16-20|all}
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
-</head>
-<body>
+  </head>
+  <body>
     <h1>Blog</h1>
     <ul>
-        {% for post in posts %}
-            <li>{{ post.title }}</li>
-        {% endfor %}
+      {% for post in posts %}
+      <li>{{ post.title }}</li>
+      {% endfor %}
     </ul>
-    <h2> create a post </h2>
+    <h2>create a post</h2>
     <form action="/blog/create" method="post">
-        <input type="text" name="title" placeholder="Title">
-        <textarea name="body" cols="30" rows="10" placeholder="Your post"></textarea>
-        <button type="submit">Submit</button>
+      <input type="text" name="title" placeholder="Title" />
+      <textarea
+        name="body"
+        cols="30"
+        rows="10"
+        placeholder="Your post"
+      ></textarea>
+      <button type="submit">Submit</button>
     </form>
-</body>
+  </body>
 </html>
 ```
 
+---
 
----
-layout: cover
----
+## layout: cover
 
 # Getting started with a new django app
-
 
 ---
 
 # Steps to start
 
 Setup pipenv. Ignore this step if you have already setup pipenv/venv.
-
 
 ```bash
 # install pip and venv
@@ -669,9 +663,7 @@ pipenv install
 # this might take a few minutes
 ```
 
-
 ---
-
 
 # Status checks
 
@@ -687,17 +679,16 @@ pip install pipenv --user
 pipenv -h
 ```
 
-
 possible errors:
 
 ```bash
 pipenv shell 'pipenv' is not recognized as an internal or external command, operable program or batch file.
 ```
 
-
 ---
 
 # Windows troubleshooting
+
 for pipenv users. Please ignore this step if you have already setup venv.
 
 1. Press the <kbd>Windows key+X</kbd> to access the Power User Task Menu.
@@ -706,16 +697,12 @@ for pipenv users. Please ignore this step if you have already setup venv.
 4. In the System Properties window, click the Advanced tab, then click the `Environment Variables` button near the bottom of that tab.
 5. In the `Environment Variables` window, highlight the `Path` variable in the System variables section and click the `Edit` button. Add or modify the path lines with the paths you want the computer to access. Each directory path is separated with a semicolon, as shown below.
 
-
 Second, replace your `<username>` in the following paths and add them to the PATH environment variable:
 
 ```powershell
 c:\Users\<username>\AppData\Roaming\Python\Python38\Site-Packages
 C:\Users\<username>\AppData\Roaming\Python\Python38\Scripts
 ```
-
-
-
 
 ---
 
@@ -732,7 +719,6 @@ py -m pip install Django
 py -m django --version
 ```
 
-
 change into your desired project directory and run the following commands:
 
 ```powershell
@@ -747,19 +733,18 @@ py manage.py runserver
 
 press <kbd>Ctrl</kbd>+<kbd>C</kbd> to stop the server.
 
-
-
 ---
 
 # Start a new app
 
 Apply database migrations. This step will create a new file `db.sqlite3` in your project root. if it didnt exist already.
+
 ```bash
-py manage.py migrate 
+py manage.py migrate
 ```
 
-
 create a new app named posts where we can setup a model and views
+
 ```bash
 py manage.py startapp posts
 ```
@@ -779,12 +764,11 @@ Password:
 Password (again):
 ```
 
-
 ---
 
 # Creating models
 
-This file would live in your 
+This file would live in your
 `project folder > posts > models.py`
 
 ```python
@@ -800,7 +784,7 @@ class Posts(models.Model):
     content = models.TextField("Content of the post")
     created_at = models.DateTimeField("Created at", auto_now=True, editable=True)
     cover = models.ImageField(null=True, blank=True)
-    
+
 
     class Meta:
         verbose_name = _("Posts")
@@ -822,6 +806,7 @@ class Posts(models.Model):
 it contains a section called `INSTALLED_APPS` that contains a list of all the apps that are installed in the project.
 
 open `[project_name] > settings.py` and add find the line below:
+
 ```python
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -845,11 +830,9 @@ INSTALLED_APPS += [
 pip install Pillow
 ```
 
-
 ---
 
 # Make migrations
-
 
 This will create necessary migrations for out new posts app.
 
@@ -858,6 +841,7 @@ python manage.py makemigrations
 ```
 
 desired output:
+
 ```bash
 Migrations for 'posts':
   posts/migrations/0001_initial.py
@@ -871,14 +855,13 @@ python manage.py migrate
 ```
 
 desired output:
+
 ```bash
 Operations to perform:
   Apply all migrations: admin, auth, contenttypes, posts, sessions
 Running migrations:
   Applying posts.0001_initial... OK
 ```
-
-
 
 ---
 
@@ -907,7 +890,6 @@ admin.site.register(Posts, PostsAdmin)
 Open up the admin panel and create a new post.
 [localhost:8000/admin/](https://localhost:8000/admin/)
 
-
 ---
 
 # Configuring additional settings
@@ -916,10 +898,10 @@ Open up the admin panel and create a new post.
 as well as `TEMPLATES` and `MIDDLEWARE`.
 
 In the beginning of the file, add the following:
+
 ```python
 import os
 ```
-
 
 let us first configure the `STATIC_URL` variable. we will use `STATIC_URL` to tell django where to find the static files.
 
@@ -955,12 +937,10 @@ urlpatterns = [
 
 if settings.DEBUG:
     urlpatterns += static(
-        settings.MEDIA_URL, 
+        settings.MEDIA_URL,
         document_root=settings.MEDIA_ROOT
     )
 ```
-
-
 
 ---
 
@@ -975,7 +955,6 @@ TIME_ZONE = 'Asia/Kolkata'
 ```
 
 this should give us local timezone, in all our interfaces
-
 
 ---
 
@@ -1028,10 +1007,13 @@ we need to first configure the `templates` directory, and add it to the `TEMPLAT
 
 1. Create a `templates` directory in the root directory of the project.
 2. Add the `templates` directory to the `TEMPLATE_DIRS` variable in `settings.py`.
+
 ```python
 TEMPLATES_DIRS = os.path.join(BASE_DIR,'templates')
 ```
+
 3. Now in `settings.py` find the `TEMPLATES` variable and add the following:
+
 ```python
 TEMPLATES = [
     {
@@ -1059,21 +1041,21 @@ We can define the basic layout of our application in `base.html` file.
 ```html
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <script src="https://cdn.tailwindcss.com"></script>
     <title>{{title}}</title>
-</head>
-<body>
+  </head>
+  <body>
     <h1>{{title}}</h1>
     {% block content %}
     <!-- Content Goes here -->
     {% endblock content %}
     <!-- Footer -->
     <footer>
-        <p>My new blog</p>
+      <p>My new blog</p>
     </footer>
-</body>
+  </body>
 </html>
 ```
